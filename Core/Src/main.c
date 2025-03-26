@@ -44,14 +44,6 @@ typedef struct
 #define TX_BUFF_SIZE 5001
 #define SAMP_TIME 0.001
 #define REFERENCE M_PI
-/* a little bit overshoot */
-#define KP 2.
-#define KI .001
-#define KD 3
-/* */
-//#define KP 15.0
-//#define KI 0.01
-//#define KD 0.5
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -76,8 +68,6 @@ Encoder *e;
 PID *pid;
 uint16_t buff_index, routine, cnt;
 char message[100];
-uint16_t pwm;
-float vel_w, pos_w;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -112,8 +102,7 @@ void ctrl_loop(void)
 	time = routine++ * SAMP_TIME;
 	pos = ENC_pos(e, cnt) + MTR_INIT_POS;
 	vel = ENC_vel(e, pos);
-//	tau = mtr_input(time);
-	tau = pid_control(pid, pos, REFERENCE);
+	tau = mtr_input(time);
 	duty = mtr_duty(tau);
 	mtr_output(duty);
 	/* Load the data into the buffer. */
@@ -204,18 +193,6 @@ int main(void)
 		.MTR_PPR = ENC_PPR,
 		.pre_cnt = 0
 	  });
-  pid = &( (PID) {
-    		.Kp = KP,
-    		.Ki = KI,
-    		.Kd = KD,
-    		.err_pre = 0.0,
-    		.P_term = 0.0,
-    		.I_term = 0.0,
-    		.D_term = 0.0,
-    		.max_PID = MTR_MAX,
-    		.min_PID = MTR_MIN,
-    		.max_Integral = MTR_MAX / 2.0
-        });
   memset(myData, 0, sizeof(Data));
   /* USER CODE END 2 */
 

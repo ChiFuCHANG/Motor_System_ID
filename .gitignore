@@ -1,0 +1,12 @@
+.DS_Store
+.vscode/
+.settings
+Debug
+Drivers
+.cproject
+.mxproject
+.osx.project
+.project
+Motor_ID Debug.launch
+STM32F446RETX_FLASH.ld
+STM32F446RETX_RAM.ld

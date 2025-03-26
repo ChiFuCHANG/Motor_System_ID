@@ -23,7 +23,6 @@
 /* USER CODE BEGIN Includes */
 #include "motor.h"
 #include "encoder.h"
-#include "pid.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,7 +64,6 @@ DMA_HandleTypeDef hdma_usart2_tx;
 /* USER CODE BEGIN PV */
 Data myData[TX_BUFF_SIZE];
 Encoder *e;
-PID *pid;
 uint16_t buff_index, routine, cnt;
 char message[100];
 /* USER CODE END PV */

@@ -28,9 +28,13 @@ x0=[0 0 0];
 tspan=[0 5];
 [t,x]=ode45(@(t,x) func(t,x,A,B,C,Kp,Ki,Kd),tspan,x0);
 y = C * x(:, 1 : 2)';
-figure(), plot(t, y, 'r')
+figure()
+plot(t, y, 'r')
+hold on;
 yline(pi, '--k')
+title(sprintf("Regulation result with Kp = %.3f, Ki = %.3f and Kd = %.3f.", Kp, Ki, Kd));
 legend('Actual','Reference')
+saveas(gcf, 'Regulation result', 'jpeg')
 %% function of the ID system
 function xp=func(t,x,A,B,C,Kp,Ki,Kd)
     r = pi;
